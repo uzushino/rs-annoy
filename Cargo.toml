@@ -1,0 +1,21 @@
+[package]
+name = "rannoy"
+version = "0.1.0"
+authors = ["uzushino <torattoria.mamiya@gmail.com>"]
+edition = "2018"
+build = "build.rs"
+
+[lib]
+path = "src/lib.rs"
+
+[dependencies]
+libc = "*"
+
+[dev-dependencies]
+rayon = "*"
+mnist = "*"
+rulinalg = "*"
+rand = "*"
+
+[build-dependencies]
+cc = "1.0"
