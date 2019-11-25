@@ -15,7 +15,7 @@ $ cd rannoy
 $ cargo build
 ```
 
-## Run Example.
+## Example
 
 ### mnist
 
