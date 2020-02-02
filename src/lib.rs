@@ -1,5 +1,6 @@
 use libc::{c_float, c_int, c_void};
-use std::path::PathBuf;
+use std::path::{ PathBuf, Path };
+use std::ffi::CString;
 
 pub enum AnnoyIndexInterface {}
 
@@ -59,10 +60,11 @@ impl Rannoy {
         }
     }
 
-    pub fn save(&self, path: PathBuf) {
+    pub fn save<P: AsRef<Path>>(&self, path: P) {
         unsafe {
-            if let Some(f) = path.to_str() {
-                ffi::annoy_save(self.1, f.as_ptr() as *const c_void);
+            if let Some(f) = path.as_ref().as_os_str().to_str() {
+                let path_str_c = CString::new(f).unwrap();
+                ffi::annoy_save(self.1, path_str_c.as_ptr() as *const c_void);
             }
         }
     }

@@ -47,7 +47,7 @@ fn save_model(size: u32, img: &Vec<u8>, lbl: &Vec<u8>, rows: u32, cols: u32) {
 }
 
 fn main() {
-    let (trn_size, tst_size, rows, cols) = (30_000, 30_000, 28, 28);
+    let (trn_size, tst_size, rows, cols) = (10_000, 10_000, 28, 28);
     let Mnist {
         trn_img,
         trn_lbl,
@@ -92,8 +92,8 @@ fn main() {
 
         println!("TEST{}: expected: {}, actual: {:?}", i, lbl, actual);
         if actual[0] != lbl {
-            let (_, trn) = load_mnist(30_000, 28, 28, &trn_img, &trn_lbl, lbl as usize);
-            let (_, tst) = load_mnist(30_000, 28, 28, &tst_img, &tst_lbl, actual[0] as usize);
+            let (_, trn) = load_mnist(10_000, 28, 28, &trn_img, &trn_lbl, lbl as usize);
+            let (_, tst) = load_mnist(10_000, 28, 28, &tst_img, &tst_lbl, actual[0] as usize);
 
             println!("{}\n{}", trn, tst);
         }
