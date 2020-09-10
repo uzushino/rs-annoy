@@ -1,0 +1,74 @@
+version: 2.1
+
+executors:
+  default:
+    docker:
+      - image: circleci/rust:latest
+    working_directory: ~/app
+
+commands:
+  record_build_env:
+    steps:
+      - run:
+          name: Record build environment to use as cache key
+          command: |
+            echo $OS_VERSION | tee /tmp/build-env
+            rustc --version | tee /tmp/build-env
+
+  save_cache_:
+    steps:
+      - save_cache:
+          key: cache-cargo-target-{{ .Environment.CIRCLECI_CACHE_VERSION }}-{{ .Environment.CIRCLE_JOB }}-{{ checksum "/tmp/build-env" }}-{{ checksum "Cargo.lock" }}
+          paths:
+            - ~/.cargo
+            - target
+
+  restore_cache_:
+    steps:
+      - restore_cache:
+          keys:
+            - cache-cargo-target-{{ .Environment.CIRCLECI_CACHE_VERSION }}-{{ .Environment.CIRCLE_JOB }}-{{ checksum "/tmp/build-env" }}-{{ checksum "Cargo.lock" }}
+            - cache-cargo-target-{{ .Environment.CIRCLECI_CACHE_VERSION }}-{{ .Environment.CIRCLE_JOB }}-{{ checksum "/tmp/build-env" }}
+
+jobs:
+  test:
+    parameters:
+      rust_version:
+        type: string
+        default: ""
+    executor:
+      name: default
+    steps:
+      - checkout
+      
+      - run:
+          name: rustup version
+          command: rustup --version
+
+      - when:
+          condition: << parameters.rust_version >>
+          steps:
+            - run:
+                name: Install & select $rust_version if specified
+                command: |
+                  rustup install << parameters.rust_version >>
+                  rustup override set << parameters.rust_version >>
+
+      - record_build_env
+      - restore_cache_
+
+      - run:
+          name: build & test
+          command: RUST_BACKTRACE=1 cargo test --verbose --all -- --nocapture
+
+      - save_cache_
+
+workflows:
+  version: 2
+  test:
+    jobs:
+      - test:
+          name: MSRV (Minimum Supported Rust Version)
+          rust_version: 1.40.0
+      - test:
+          name: Rust Version from `rust-toolchain`

@@ -6,7 +6,7 @@ using namespace std;
 
 AnnoyIndexInterface<int32_t, float> *annoy_index_angular(int f)
 {
-    return new ::AnnoyIndex<int32_t, float, ::Angular, ::Kiss64Random>(f);
+    return new ::AnnoyIndex<int32_t, float, ::Angular, ::Kiss64Random, AnnoyIndexSingleThreadedBuildPolicy>(f);
 }
 
 void annoy_save(AnnoyIndexInterface<int32_t, float> *index, const char *file)
