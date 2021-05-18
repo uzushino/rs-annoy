@@ -4,7 +4,7 @@
 
 ```toml
 [dependencies]
-rannoy = { git = "https://github.com/uzushino/rannoy" }
+rannoy = { git = "https://github.com/uzushino/rs-annoy" }
 ```
 
 ## Building
