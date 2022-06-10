@@ -267,9 +267,9 @@ dependencies = [
 
 [[package]]
 name = "rulinalg"
-version = "0.4.2"
+version = "0.3.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "04ada202c9685e1d72a7420c578e92b358dbf807d3dfabb676a3dab9cc3bb12f"
+checksum = "5670ce3717deb2d4436bdb29f07c549b56595f1fd8af1ca4682f1c1b1ac57f86"
 dependencies = [
  "matrixmultiply",
  "num",

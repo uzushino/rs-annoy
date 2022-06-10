@@ -14,7 +14,7 @@ libc = "*"
 [dev-dependencies]
 rayon = "*"
 mnist = "*"
-rulinalg = "*"
+rulinalg = "0.3"
 rand = "*"
 
 [build-dependencies]
