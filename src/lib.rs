@@ -1,6 +1,6 @@
 use libc::{c_float, c_int, c_void};
-use std::path::{ PathBuf, Path };
 use std::ffi::CString;
+use std::path::{Path, PathBuf};
 
 pub enum AnnoyIndexInterface {}
 
@@ -48,7 +48,7 @@ impl Rannoy {
         Rannoy(n, index)
     }
 
-    pub fn add_item(&self, item: i32, w: &Vec<f32>) {
+    pub fn add_item(&self, item: i32, w: &[f32]) {
         unsafe {
             ffi::annoy_add_item(self.1, item, w.as_ptr());
         }
