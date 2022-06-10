@@ -69,6 +69,6 @@ workflows:
     jobs:
       - test:
           name: MSRV (Minimum Supported Rust Version)
-          rust_version: 1.40.0
+          rust_version: 1.60.0
       - test:
           name: Rust Version from `rust-toolchain`
