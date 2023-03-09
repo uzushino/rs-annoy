@@ -23,6 +23,7 @@ fn load_mnist(
 fn save_model(size: u32, img: &Vec<u8>, lbl: &Vec<u8>, rows: u32, cols: u32) {
     println!("Load mnist data.");
     let annoy = rannoy::Rannoy::new(28 * 28);
+    annoy.set_seed(123);
 
     for i in 0..size {
         let (_, img) = load_mnist(size, rows, cols, &img, &lbl, i as usize);
@@ -48,6 +49,7 @@ fn save_model(size: u32, img: &Vec<u8>, lbl: &Vec<u8>, rows: u32, cols: u32) {
 
 fn main() {
     let (trn_size, tst_size, rows, cols) = (10_000, 10_000, 28, 28);
+
     let Mnist {
         trn_img,
         trn_lbl,
@@ -63,6 +65,7 @@ fn main() {
     save_model(trn_size, &trn_img, &trn_lbl, rows, cols);
 
     let annoy = rannoy::Rannoy::new(28 * 28);
+    annoy.set_seed(123);
     annoy.load(PathBuf::from("mnist.ann"));
 
     let mut rng = rand::thread_rng();

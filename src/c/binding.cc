@@ -58,6 +58,11 @@ void annoy_get_nns_by_item(
     std::copy(resultV.begin(), resultV.end(), result);
 }
 
+void annoy_set_seed(AnnoyIndexInterface<int32_t, float> *index, uint32_t q)
+{
+    index->set_seed(q);
+}
+
 void annoy_get_nns_by_vector(
     AnnoyIndexInterface<int32_t, float> *index, 
     const float *w, 

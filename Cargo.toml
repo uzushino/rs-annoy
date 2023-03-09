@@ -9,11 +9,10 @@ build = "build.rs"
 path = "src/lib.rs"
 
 [dependencies]
-libc = "*"
+libc = "0.2.139"
 
 [dev-dependencies]
-rayon = "*"
-mnist = "*"
+mnist = "0.5"
 rulinalg = "0.3"
 rand = "*"
 

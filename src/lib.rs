@@ -1,4 +1,4 @@
-use libc::{c_float, c_int, c_void};
+use libc::{c_float, c_int, c_uint, c_void};
 use std::ffi::CString;
 use std::path::{Path, PathBuf};
 
@@ -36,6 +36,8 @@ pub mod ffi {
             result: *mut c_int,
             distances: *mut c_float,
         );
+
+        pub fn annoy_set_seed(index: *mut AnnoyIndexInterface, q: c_uint);
     }
 }
 
@@ -108,6 +110,12 @@ impl Rannoy {
             let b = std::slice::from_raw_parts_mut(distance_ptr, n as usize);
 
             (a.to_vec(), b.to_vec())
+        }
+    }
+
+    pub fn set_seed(&self, q: u32) {
+        unsafe {
+            ffi::annoy_set_seed(self.1, q);
         }
     }
 }
