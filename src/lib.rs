@@ -1,6 +1,7 @@
-use libc::{c_float, c_int, c_uint, c_void};
 use std::ffi::CString;
 use std::path::{Path, PathBuf};
+
+use libc::{c_float, c_int, c_uint, c_void};
 
 pub enum AnnoyIndexInterface {}
 
@@ -42,6 +43,11 @@ pub mod ffi {
 }
 
 pub struct Rannoy(usize, *mut AnnoyIndexInterface);
+
+/// SAFETY:
+/// - `Rannoy` is `Send` because we have exclusive access to `*mut AnnoyIndexInterface`
+/// and there is no shared mutable state.
+unsafe impl Send for Rannoy {}
 
 impl Rannoy {
     pub fn new(n: usize) -> Self {
